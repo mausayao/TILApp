@@ -8,8 +8,13 @@ public func configure(_ app: Application) throws {
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
-
-    app.migrations.add(CreateTodo())
+    
+    app.migrations.add(CreateAcronym())
+    app.migrations.add(CreateUser())
+    app.migrations.add(CreateCategory())
+    app.migrations.add(CreateAcronymCategoryPivot())
+    
+    try app.autoMigrate().wait()
 
     // register routes
     try routes(app)
